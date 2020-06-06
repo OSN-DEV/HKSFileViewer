@@ -79,7 +79,12 @@ namespace HKSFileViewer {
             using (var reader = new FileOperator(Constants.KeyMappingFIle, FileOperator.OpenMode.Read)) {
                 while (!reader.Eof) {
                     var pair = reader.ReadLine().Split('\t');
-                    this._keyMapping.Add(int.Parse(pair[0]), pair[1].Replace("/", "\r\n"));
+                    if (this._keyMapping.ContainsKey(int.Parse(pair[0]))) {
+                        ErrorMessage.Show(ErrMsgId.MappingKeyIsDuplicated);
+                        break;
+                    } else {
+                        this._keyMapping.Add(int.Parse(pair[0]), pair[1].Replace("@r@", "\r\n"));
+                    }
                 }
             }
 
@@ -107,9 +112,7 @@ namespace HKSFileViewer {
                     }
 
                     // desialize json
-                    hks.OpenForRead();
                     var json = HksJsonData.Desialize(hks.ReadAll());
-                    hks.Close();
 
                     // check hsk files
                     if (6 != json.DipSwitch?.Length) {
@@ -140,7 +143,7 @@ namespace HKSFileViewer {
                     this.SetKeyMappingData(fn, json.Keymap.WithFn);
                     fn.Update();
                 }
-            } catch (Exception ex) {
+            } catch  {
                 return (false, ErrMsgId.HKSFileParseException);
             }
             return (true, 0);

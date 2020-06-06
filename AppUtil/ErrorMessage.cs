@@ -10,7 +10,8 @@ namespace HKSFileViewer.AppUtil {
             NormalKeyMappingDefIsWrong,
             WithFnKeyMappingDefIsWrong,
             HKSFileParseException,
-            InvalidFileType
+            InvalidFileType,
+            MappingKeyIsDuplicated,
         }
         private static Dictionary<ErrMsgId, string> _message = new Dictionary<ErrMsgId, string>() {
             { ErrMsgId.HKSFileNotFound, "HSKファイルが見つかりません。"},
@@ -19,6 +20,7 @@ namespace HKSFileViewer.AppUtil {
             { ErrMsgId.WithFnKeyMappingDefIsWrong,"キーマピング(Fn)の定義が不正です。" },
             { ErrMsgId.HKSFileParseException,"HKSファイルの読込時に予期せぬエラーが発生しました。" },
             { ErrMsgId.InvalidFileType,"HKS形式のファイルを指定してください。" },
+            { ErrMsgId.MappingKeyIsDuplicated,"mapping.tsvにキーの重複あります。" },
 
         };
         #endregion
